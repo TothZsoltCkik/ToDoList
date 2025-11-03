@@ -65,9 +65,9 @@ function chooseTask(e) {
         return;
     }
     const index = li.dataset.index;
-    task[index].classList.add("chosen");
+    li.classList.add("chosen");
     if (e.target != li) {
-        task[index].classList.remove("chosen");
+        li.classList.remove("chosen");
     }
 }
 
