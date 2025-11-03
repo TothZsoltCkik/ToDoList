@@ -67,15 +67,19 @@ ul.addEventListener("click", deleteTask);
 
 
 function chooseTask(e) {
-    const li = e.target.closest("li");
-    if (!li) {
-        return;
+    const li = e.target.closest("li");  
+    const temp = document.querySelector(".chosen")
+    if (!temp || li) {
+        li.classList.add("chosen");
+        
     }
-    
-    li.classList.add("chosen");
-    if (e.target != li) {
-        li.classList.remove("chosen");
+
+    if (e.target != ul.children) {
+        temp.classList.remove("chosen")    
     }
+
+    temp.classList.remove("chosen")
+
 }
 
 ul.addEventListener("click", chooseTask);
