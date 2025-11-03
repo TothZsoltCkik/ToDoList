@@ -137,3 +137,7 @@ body{
     border-radius: 20px;
 
 }
+
+.chosen{
+    background-color: red;
+}

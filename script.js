@@ -74,7 +74,7 @@ function chooseTask(e) {
         
     }
 
-    if (e.target != ul.children) {
+    if (e.target != ul) {
         temp.classList.remove("chosen")    
     }
 
@@ -82,7 +82,7 @@ function chooseTask(e) {
 
 }
 
-ul.addEventListener("click", chooseTask);
+document.addEventListener("click", chooseTask);
 
 
 function main() {
