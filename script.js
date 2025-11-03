@@ -47,7 +47,14 @@ function saveTask() {
 }
 
 function deleteTask(e) {
+
+
     const li = e.target.closest("button");
+
+    if (!li) {
+        return;
+    }
+
     li.parentElement.remove();
 
     const index = li.dataset.index;
@@ -65,9 +72,11 @@ function chooseTask(e) {
         return;
     }
     const index = li.dataset.index;
-    task[index].classList.add("chosen");
+    console.log(tasks[index])
+    
+    li.classList.add("chosen");
     if (e.target != li) {
-        task[index].classList.remove("chosen");
+        li.classList.remove("chosen");
     }
 }
 
