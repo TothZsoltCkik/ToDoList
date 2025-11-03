@@ -49,8 +49,8 @@ function saveTask() {
 function deleteTask(e) {
 
 
-    const li = e.target.closest("li");
-    li.remove();
+    const li = e.target.closest("button");
+    li.parentElement.remove();
 
     const index = li.dataset.index;
     tasks.splice(index,1);
