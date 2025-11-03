@@ -46,24 +46,31 @@ function saveTask() {
     return localStorage.setItem("tasks",JSON.stringify(tasks));
 }
 
-function deleteTask(e) {
+// function deleteTask(e) {
+//     const li = e.target.closest("li");
+//     li.remove();
+
+//     const index = li.dataset.index;
+//     tasks.splice(index,1);
+//     saveTask();
+
+// }
+// ul.addEventListener("click", deleteTask);
 
 
+function chooseTask(e){
     const li = e.target.closest("li");
-    li.remove();
-
+    if (!li) {
+        return;
+    }
     const index = li.dataset.index;
-    tasks.splice(index,1);
-    saveTask();
-
+    task[index].classList.add("chosen");
+    if (e.target != li) {
+        task[index].classList.remove("chosen");
+    }
 }
-ul.addEventListener("click", deleteTask);
 
-
-function choseTask(){
-    
-}
-ul.addEventListener("click", choseTask);
+ul.addEventListener("click", chooseTask);
 
 
 function main() {
