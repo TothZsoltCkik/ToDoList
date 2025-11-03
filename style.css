@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.darker{
+    background-image: linear-gradient(100deg, #001214, #001f29);
+    color: white;
+    transition: 0.3s linear;
+}
+
+.light {
+    background-image: linear-gradient(100deg, #d4f1ff, #ffffff);
+    color: #1a150e;
+    transition: 0.3s linear;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    overflow-y:auto;
+}
+
+.display{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 150vh;
+    gap: 30px;
+}
+
+.text{
+    text-align: center;
+    position: sticky;
+}
+
+.text h1{
+    font-size: 5em;
+}
+
+
+/*input resze*/
+
+.input{
+    display: flex;
+    flex-direction:row;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.input input{
+    width: 40vw;
+    min-width: 500px;
+    height: 70px;
+    border-radius: 40px 0px 0 40px;
+    border: none;
+    background-color: #ffffff;
+    opacity: 0.8;
+    padding: 0 0 0 10px;
+    font-size: 1em;
+    font-weight: bold;
+    transition: 0.4s linear;
+}
+
+.input input:focus{
+    border: none;
+    outline: none;
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(0, 170, 255, 0.5);
+}
+
+
+/*button resze*/
+
+.input button{
+    width: 8em;
+    height: 70px;
+    padding: 10px 15px;
+    border-radius: 0 40px 40px 0;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+}
+
+
+
+/*felsorolas resze*/
+
+.list {
+    display: flex;
+    justify-content: center;
+    overflow-y: auto;
+    max-height: 55vh;
+    padding-bottom: 10px;
+    scroll-behavior: smooth;
+}
+
+.list ul{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: center;
+    gap: 30px;
+    list-style-type: none;
+    width: 30vw;
+    max-height: 700px;
+    overflow-y:auto;
+    overflow-x: hidden;
+    
+}
+
+
+.list li{
+    padding: 20px;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    height: 3em;
+    border-radius: 20px;
+    background-color: #ffffff;
+    color: black;
+    font-size: 20px;
+    
+
+    border: 1px solid black;
+}
+
+.list button{
+    border: none;
+    cursor: pointer;
+    background-color: lightgrey;
+    padding: 5px;
+    border-radius: 20px;
+
+}
