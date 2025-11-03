@@ -4,15 +4,15 @@ const button = document.getElementById("butt");
 const li = document.createElement("li")
 
 
-function setTasks(){
+function setTasks() {
     const text = document.getElementById("input");
     if (text.value.length === 0 || tasks.includes(text.value)) return;
     tasks.push(text.value);
     saveTask();
-    const li = createListItem(text.value,tasks.length - 1);
+    const li = createListItem(text.value, tasks.length - 1);
     ul.appendChild(li);
     text.value = "";
-    
+
 }
 
 function createListItem(task, i) {
@@ -23,7 +23,7 @@ function createListItem(task, i) {
     li.appendChild(deleteButton);
     li.dataset.index = i;
 
-    
+
     return li;
 }
 
@@ -43,36 +43,44 @@ function createButton() {
 }
 
 function saveTask() {
-    return localStorage.setItem("tasks",JSON.stringify(tasks));
+    return localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
 function deleteTask(e) {
-
-
     const li = e.target.closest("button");
     li.parentElement.remove();
 
     const index = li.dataset.index;
-    tasks.splice(index,1);
+    tasks.splice(index, 1);
     saveTask();
 
 }
 ul.addEventListener("click", deleteTask);
 
 
-function choseTask(){
-    
+
+function chooseTask(e) {
+    const li = e.target.closest("li");
+    if (!li) {
+        return;
+    }
+    const index = li.dataset.index;
+    task[index].classList.add("chosen");
+    if (e.target != li) {
+        task[index].classList.remove("chosen");
+    }
 }
-ul.addEventListener("click", choseTask);
+
+ul.addEventListener("click", chooseTask);
 
 
 function main() {
     ul.innerText = "";
     tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     for (let i = 0; i < tasks.length; i++) {
-        
+
         const li = createListItem(tasks[i], i);
-        ul.appendChild(li);   
+        ul.appendChild(li);
     }
 }
 
