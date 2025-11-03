@@ -47,7 +47,14 @@ function saveTask() {
 }
 
 function deleteTask(e) {
+
+
     const li = e.target.closest("button");
+
+    if (!li) {
+        return;
+    }
+
     li.parentElement.remove();
 
     const index = li.dataset.index;
@@ -64,7 +71,7 @@ function chooseTask(e) {
     if (!li) {
         return;
     }
-    const index = li.dataset.index;
+    
     li.classList.add("chosen");
     if (e.target != li) {
         li.classList.remove("chosen");
