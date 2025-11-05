@@ -138,6 +138,6 @@ body{
 
 }
 
-.chosen{
+.list li.chosen{
     background-color: red;
 }

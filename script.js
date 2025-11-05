@@ -73,13 +73,22 @@ function chooseTask(e) {
         li.classList.add("chosen");
         
     }
-
-    if (e.target != ul) {
+    
+    if (temp) {
         temp.classList.remove("chosen")    
     }
-
-    temp.classList.remove("chosen")
-
+    
+    const index = li.dataset.index;
+    if (li.classList.contains("chosen")) {
+        addEventListener("keydown", (e) => {
+            if (e.key == "ArrowUp" && !tasks[0]) {
+                [tasks[index], tasks[Number(index) - 1]] = [tasks[Number(index) - 1], tasks[index]];
+            }
+            if (e.key == "ArrowDown" && !tasks[tasks.length - 1]) {
+                [tasks[index], tasks[index + 1]] = [tasks[index + 1], tasks[index]];
+            }
+        } )
+    }
 }
 
 document.addEventListener("click", chooseTask);
