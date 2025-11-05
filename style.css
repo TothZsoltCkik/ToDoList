@@ -141,3 +141,7 @@ body{
 .chosen{
     background-color: red;
 }
+
+.list i{
+    font-size: 36px;
+}

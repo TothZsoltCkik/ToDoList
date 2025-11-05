@@ -2,10 +2,11 @@ let tasks = [];
 const ul = document.getElementById("ul");
 const button = document.getElementById("butt");
 const li = document.createElement("li")
+const display = document.getElementById("display")
 
+const text = document.getElementById("input");
 
 function setTasks() {
-    const text = document.getElementById("input");
     if (text.value.length === 0 || tasks.includes(text.value)) return;
     tasks.push(text.value);
     saveTask();
@@ -13,7 +14,12 @@ function setTasks() {
     ul.appendChild(li);
     text.value = "";
 
+
 }
+
+text.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") setTasks();
+    })
 
 function createListItem(task, i) {
     const li = document.createElement("li");
@@ -35,7 +41,7 @@ function createText(task) {
 
 function createButton() {
     const deleteButton = document.createElement("button");
-    deleteButton.innerHTML = "<i class='fa fa-trash-o' style='font-size:36px'></i>";
+    deleteButton.innerHTML = "<i class='fa fa-trash-o'></i>";
 
 
     return deleteButton;
@@ -67,26 +73,23 @@ ul.addEventListener("click", deleteTask);
 
 
 function chooseTask(e) {
-    const li = e.target.closest("li");  
-    const temp = document.querySelector(".chosen")
-    if (!temp || li) {
-        li.classList.add("chosen");
-        
+    const li = e.target.closest("li");
+    
+    if (!li) {
+        return;
     }
-
-    if (e.target != ul) {
-        temp.classList.remove("chosen")    
+    
+    li.classList.add("chosen");
+    if (e.target != li) {
+        li.classList.remove("chosen");
     }
-
-    temp.classList.remove("chosen")
-
 }
 
-document.addEventListener("click", chooseTask);
+ul.addEventListener("click", chooseTask);
 
 
 function main() {
-    ul.innerText = "";
+    // ul.innerText = "";
     tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     for (let i = 0; i < tasks.length; i++) {
 
