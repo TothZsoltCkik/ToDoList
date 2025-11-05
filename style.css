@@ -85,6 +85,10 @@ body{
     border: none;
     font-weight: bold;
 }
+.noselect {
+    user-select: none;
+    
+  }
 
 
 
@@ -125,7 +129,6 @@ body{
     color: black;
     font-size: 20px;
     
-
     border: 1px solid black;
 }
 
@@ -133,8 +136,8 @@ body{
     border: none;
     cursor: pointer;
     background-color: lightgrey;
-    padding: 5px;
-    border-radius: 20px;
+    padding: 9px;
+    border-radius: 30px;
 
 }
 
@@ -143,5 +146,5 @@ body{
 }
 
 .list i{
-    font-size: 36px;
+    font-size: 31px;
 }

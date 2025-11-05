@@ -25,7 +25,9 @@ function createListItem(task, i) {
     const li = document.createElement("li");
     const text = createText(task);
     li.appendChild(text);
-    const deleteButton = createButton(task);
+    const checkButton = createButton("<i class='fa-solid fa-check'></i>")
+    li.appendChild(checkButton)
+    const deleteButton = createButton("<i class='fa fa-trash-o'></i>");
     li.appendChild(deleteButton);
     li.dataset.index = i;
 
@@ -39,12 +41,14 @@ function createText(task) {
     return text;
 }
 
-function createButton() {
-    const deleteButton = document.createElement("button");
-    deleteButton.innerHTML = "<i class='fa fa-trash-o'></i>";
 
 
-    return deleteButton;
+function createButton(text) {
+    const tempButton = document.createElement("button");
+    tempButton.innerHTML = text;
+
+
+    return tempButton;
 
 }
 
@@ -56,6 +60,7 @@ function deleteTask(e) {
 
 
     const li = e.target.closest("button");
+    if (!e.target.classList.contains("fa-trash-o")) return;
 
     if (!li) {
         return;
@@ -74,7 +79,7 @@ ul.addEventListener("click", deleteTask);
 
 function chooseTask(e) {
     const li = e.target.closest("li");
-    
+    const temp = document.querySelector(".chosen")
     if (!li) {
         return;
     }
@@ -94,6 +99,7 @@ function chooseTask(e) {
             }
         } )
     }
+    saveTask();
 }
 
 ul.addEventListener("click", chooseTask);

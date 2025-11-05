@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>To-Do list</title>
 </head>
 <body class="darker">
@@ -15,15 +16,15 @@
             <h1>To-Do list</h1></i>
         </div>
         <div class="input">
-            <input type="text" placeholder="Ide irj..." id="input">
+            <input type="text" placeholder="Ide irj..." id="input" maxlength="30">
             <button id="butt">Add hozzá!</button>
         </div>
         <div class="list">
-            <ul id="ul">
+            <ul id="ul" class="noselect">
                 <li data-index="1">
                     <span>teszt</span>
-                    <button><i class='fa fa-trash-o' ></i></button>
-                    
+                    <button><i class="fa-solid fa-check"></i></button>
+                    <button><i class='fa fa-trash-o'></i></button>
                 </li>
             </ul>
         </div>
