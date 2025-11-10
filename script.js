@@ -65,7 +65,7 @@ function deleteTask(e) {
     const li = e.target.closest("button");
 
     
-    if (!e.target.classList.contains("fa-trash-o") && !e.target.classList.contains("delete-btn")) return;
+    if (!(e.target.classList.contains("fa-trash-o")) && !(e.target.classList.contains("delete-btn"))) return;
 
     if (!li) {
         return;
