@@ -62,7 +62,7 @@ function deleteTask(e) {
     const li = e.target.closest("button");
     if (!(e.target.classList.contains("fa-trash-o")) && !(e.target.classList.contains("delete-btn"))) return;
 
-    if (!confirm("helo")) {
+    if (!confirm("Biztosan szeretnéd kitörölni?")) {
         return
     }
 
@@ -87,9 +87,15 @@ function chooseTask(e) {
     if (!li) {
         return;
     }
+    if (li.classList.contains("done")) {
+        return;
+    }
 
     if (temp) {
         temp.classList.remove("chosen");
+    }
+    if (e.target.classList.contains("fa-square-check")) {
+        return;
     }
 
     li.classList.add("chosen");
