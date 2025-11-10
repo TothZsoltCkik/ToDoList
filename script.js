@@ -28,6 +28,7 @@ function createListItem(task, i) {
     const checkButton = createButton("<i class='fa-solid fa-check'></i>")
     li.appendChild(checkButton)
     const deleteButton = createButton("<i class='fa fa-trash-o'></i>");
+    deleteButton.classList.add("delete-btn");
     li.appendChild(deleteButton);
     li.dataset.index = i;
 
@@ -59,8 +60,12 @@ function saveTask() {
 function deleteTask(e) {
 
 
+
+    
     const li = e.target.closest("button");
-    if (!e.target.classList.contains("fa-trash-o")) return;
+
+    
+    if (!e.target.classList.contains("fa-trash-o") && !e.target.classList.contains("delete-btn")) return;
 
     if (!li) {
         return;
