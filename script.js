@@ -19,13 +19,13 @@ function setTasks() {
 
 text.addEventListener("keypress", (e) => {
     if (e.key === "Enter") setTasks();
-    })
+})
 
 function createListItem(task, i) {
     const li = document.createElement("li");
     const text = createText(task);
     li.appendChild(text);
-    const checkButton = createButton("<i class='fa-solid fa-check'></i>")
+    const checkButton = createButton("<i class='fa-regular fa-square-check'></i>")
     li.appendChild(checkButton)
     const deleteButton = createButton("<i class='fa fa-trash-o'></i>");
     deleteButton.classList.add("delete-btn");
@@ -58,14 +58,12 @@ function saveTask() {
 }
 
 function deleteTask(e) {
-
-
-
-    
     const li = e.target.closest("button");
-
-    
     if (!(e.target.classList.contains("fa-trash-o")) && !(e.target.classList.contains("delete-btn"))) return;
+
+    if (!confirm("helo")) {
+        return
+    }
 
     if (!li) {
         return;
@@ -88,11 +86,11 @@ function chooseTask(e) {
     if (!li) {
         return;
     }
-    
+
     if (temp) {
-        temp.classList.remove("chosen")    
+        temp.classList.remove("chosen")
     }
-    
+
     const index = li.dataset.index;
     if (li.classList.contains("chosen")) {
         addEventListener("keydown", (e) => {
@@ -102,12 +100,38 @@ function chooseTask(e) {
             if (e.key == "ArrowDown" && !tasks[tasks.length - 1]) {
                 [tasks[index], tasks[index + 1]] = [tasks[index + 1], tasks[index]];
             }
-        } )
+        })
     }
     saveTask();
 }
 
 ul.addEventListener("click", chooseTask);
+
+
+
+function doneTask(e) {
+    if (!(e.target.classList.contains("fa-square-check"))) return;
+    const li = e.target.closest("li");
+
+
+
+    const icon = e.target;
+    if (li.classList.contains("done")) {
+        li.classList.remove("done");
+        icon.classList.remove("fa-solid");
+        icon.classList.add("fa-regular");
+    }
+    else {
+        li.classList.add("done");
+        icon.classList.remove("fa-regular");
+        icon.classList.add("fa-solid");
+    }
+
+}
+
+
+
+ul.addEventListener("click", doneTask)
 
 
 function main() {
