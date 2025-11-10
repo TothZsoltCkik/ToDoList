@@ -3,6 +3,7 @@ const ul = document.getElementById("ul");
 const button = document.getElementById("butt");
 const li = document.createElement("li")
 const display = document.getElementById("display")
+const body = document.getElementById("body");
 
 const text = document.getElementById("input");
 
@@ -81,13 +82,14 @@ ul.addEventListener("click", deleteTask);
 
 
 function chooseTask(e) {
-    const li = e.target.closest("li");
-    const temp = document.querySelector(".chosen")
+    let li = e.target.closest("li");
+    let temp = document.querySelector(".chosen");
     if (!li) {
         return;
     }
 
     if (temp) {
+<<<<<<< HEAD
         temp.classList.remove("chosen")
     }
 
@@ -101,7 +103,24 @@ function chooseTask(e) {
                 [tasks[index], tasks[index + 1]] = [tasks[index + 1], tasks[index]];
             }
         })
+=======
+        temp.classList.remove("chosen");
+>>>>>>> 013224f57961313c3679c4b57b00e3d002a4a341
     }
+
+    li.classList.add("chosen");
+
+    let index = Number(li.dataset.index);
+    addEventListener("keydown", (e) => {
+        if (e.key == "ArrowUp" && index > 0) {
+            [tasks[index], tasks[index * 1 - 1]] = [tasks[index * 1 - 1], tasks[index]];
+            updateTaskList();
+        }
+        if (e.key == "ArrowDown" && index < tasks.length - 1) {
+            [tasks[index], tasks[index * 1 + 1]] = [tasks[index * 1 + 1], tasks[index]];
+            updateTaskList();
+        }
+    })
     saveTask();
 }
 
@@ -135,13 +154,25 @@ ul.addEventListener("click", doneTask)
 
 
 function main() {
-    // ul.innerText = "";
+    ul.innerText = "";
+    renderTask();
+}
+
+function renderTask() {
     tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     for (let i = 0; i < tasks.length; i++) {
 
         const li = createListItem(tasks[i], i);
         ul.appendChild(li);
     }
+}
+
+function updateTaskList() {
+    const taskListItems = ul.querySelectorAll("li");
+    tasks.forEach((task, index) => {
+        taskListItems[index].dataset.index = index;
+        taskListItems[index].querySelector("span").innerHTML = task;
+    });
 }
 
 main();
