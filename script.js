@@ -3,6 +3,7 @@ const ul = document.getElementById("ul");
 const button = document.getElementById("butt");
 const li = document.createElement("li")
 const display = document.getElementById("display")
+const body = document.getElementById("body");
 
 const text = document.getElementById("input");
 
@@ -19,7 +20,7 @@ function setTasks() {
 
 text.addEventListener("keypress", (e) => {
     if (e.key === "Enter") setTasks();
-    })
+})
 
 function createListItem(task, i) {
     const li = document.createElement("li");
@@ -78,27 +79,29 @@ ul.addEventListener("click", deleteTask);
 
 
 function chooseTask(e) {
-    const li = e.target.closest("li");
-    const temp = document.querySelector(".chosen")
+    let li = e.target.closest("li");
+    let temp = document.querySelector(".chosen");
     if (!li) {
         return;
     }
-    
+
     if (temp) {
-        temp.classList.remove("chosen")    
+        temp.classList.remove("chosen");
     }
-    
-    const index = li.dataset.index;
-    if (li.classList.contains("chosen")) {
-        addEventListener("keydown", (e) => {
-            if (e.key == "ArrowUp" && !tasks[0]) {
-                [tasks[index], tasks[Number(index) - 1]] = [tasks[Number(index) - 1], tasks[index]];
-            }
-            if (e.key == "ArrowDown" && !tasks[tasks.length - 1]) {
-                [tasks[index], tasks[index + 1]] = [tasks[index + 1], tasks[index]];
-            }
-        } )
-    }
+
+    li.classList.add("chosen");
+
+    let index = Number(li.dataset.index);
+    addEventListener("keydown", (e) => {
+        if (e.key == "ArrowUp" && index > 0) {
+            [tasks[index], tasks[index * 1 - 1]] = [tasks[index * 1 - 1], tasks[index]];
+            updateTaskList();
+        }
+        if (e.key == "ArrowDown" && index < tasks.length - 1) {
+            [tasks[index], tasks[index * 1 + 1]] = [tasks[index * 1 + 1], tasks[index]];
+            updateTaskList();
+        }
+    })
     saveTask();
 }
 
@@ -106,13 +109,25 @@ ul.addEventListener("click", chooseTask);
 
 
 function main() {
-    // ul.innerText = "";
+    ul.innerText = "";
+    renderTask();
+}
+
+function renderTask() {
     tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     for (let i = 0; i < tasks.length; i++) {
 
         const li = createListItem(tasks[i], i);
         ul.appendChild(li);
     }
+}
+
+function updateTaskList() {
+    const taskListItems = ul.querySelectorAll("li");
+    tasks.forEach((task, index) => {
+        taskListItems[index].dataset.index = index;
+        taskListItems[index].querySelector("span").innerHTML = task;
+    });
 }
 
 main();
