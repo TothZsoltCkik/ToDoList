@@ -93,7 +93,7 @@ function chooseTask(e) {
     }
 
     li.classList.add("chosen");
-
+    
     let index = Number(li.dataset.index);
     addEventListener("keydown", (e) => {
         if (e.key == "ArrowUp" && index > 0) {
