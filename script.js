@@ -22,6 +22,7 @@ text.addEventListener("keypress", (e) => {
     if (e.key === "Enter") setTasks();
 })
 
+
 function createListItem(task, i) {
     const li = document.createElement("li");
     const text = createText(task);
@@ -82,39 +83,83 @@ ul.addEventListener("click", deleteTask);
 
 
 function chooseTask(e) {
-    let li = e.target.closest("li");
-    let temp = document.querySelector(".chosen");
-    if (!li) {
-        return;
-    }
-    if (li.classList.contains("done")) {
-        return;
-    }
+  const li = e.target.closest("li");
+  if (!li) return;
+  if (li.classList.contains("done")) return;
 
-    if (temp) {
-        temp.classList.remove("chosen");
-    }
-    if (e.target.classList.contains("fa-square-check")) {
-        return;
-    }
+  // ha a törlés vagy check ikonra kattintunk, ne válasszon ki
+  if (e.target.closest("button")) return;
 
-    li.classList.add("chosen");
-    
-    let index = Number(li.dataset.index);
-    addEventListener("keydown", (e) => {
-        if (e.key == "ArrowUp" && index > 0) {
-            [tasks[index], tasks[index * 1 - 1]] = [tasks[index * 1 - 1], tasks[index]];
-            updateTaskList();
-        }
-        if (e.key == "ArrowDown" && index < tasks.length - 1) {
-            [tasks[index], tasks[index * 1 + 1]] = [tasks[index * 1 + 1], tasks[index]];
-            updateTaskList();
-        }
-    })
-    saveTask();
+  // előző chosen törlése
+  const prevChosen = document.querySelector(".chosen");
+  if (prevChosen) prevChosen.classList.remove("chosen");
+
+  // most kijelöljük az új elemet
+  li.classList.add("chosen");
 }
 
-ul.addEventListener("click", chooseTask);
+// csak egyszer adjuk hozzá a nyílkezelést
+document.addEventListener("keydown", (e) => {
+  const chosen = document.querySelector(".chosen");
+  if (!chosen) return; // ha nincs kiválasztott elem, ne csináljon semmit
+
+  const index = Number(chosen.dataset.index);
+
+  if (e.key === "ArrowUp" && index > 0) {
+    const newChosen = swapTasks(index, index - 1);
+    updateChosen(newChosen);
+  }
+
+  if (e.key === "ArrowDown" && index < tasks.length - 1) {
+    const newChosen = swapTasks(index, index + 1);
+    updateChosen(newChosen);
+  }
+});
+
+function swapTasks(i, j) {
+  // 1️⃣ tömb sorrend csere
+  [tasks[i], tasks[j]] = [tasks[j], tasks[i]];
+
+  // 2️⃣ DOM csere
+  const lis = ul.querySelectorAll("li");
+  const li1 = lis[i];
+  const li2 = lis[j];
+  if (!li1 || !li2) return null;
+
+  const placeholder = document.createElement("div");
+  ul.replaceChild(placeholder, li1);
+  ul.replaceChild(li1, li2);
+  ul.replaceChild(li2, placeholder);
+
+  // 3️⃣ index frissítése
+  updateTaskList();
+  saveTask();
+
+  // visszaadjuk az új helyen lévő elemet
+  return ul.querySelectorAll("li")[j];
+}
+
+function updateTaskList() {
+  const taskListItems = ul.querySelectorAll("li");
+
+  taskListItems.forEach((li, index) => {
+    li.dataset.index = index;
+    const span = li.querySelector("span");
+    if (span) span.textContent = tasks[index];
+  });
+}
+
+function updateChosen(newChosen) {
+  // az előző chosen class törlése
+  const oldChosen = document.querySelector(".chosen");
+  if (oldChosen) oldChosen.classList.remove("chosen");
+
+  // az új helyen lévő elem megjelölése
+  if (newChosen) newChosen.classList.add("chosen");
+}
+
+document.addEventListener("click", chooseTask);
+
 
 
 
@@ -157,14 +202,6 @@ function renderTask() {
         const li = createListItem(tasks[i], i);
         ul.appendChild(li);
     }
-}
-
-function updateTaskList() {
-    const taskListItems = ul.querySelectorAll("li");
-    tasks.forEach((task, index) => {
-        taskListItems[index].dataset.index = index;
-        taskListItems[index].querySelector("span").innerHTML = task;
-    });
 }
 
 main();
