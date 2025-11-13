@@ -75,14 +75,11 @@ function deleteTask(e) {
 
     const index = Number(li.dataset.index);
 
-    // törlés a tömbből
     tasks.splice(index, 1);
     saveTask();
 
-    // törlés a DOM-ból
     li.remove();
 
-    // 🔧 itt jön a fontos rész:
     updateTaskList();
 }
 
@@ -95,28 +92,24 @@ function chooseTask(e) {
     if (!li) return;
     if (li.classList.contains("done")) return;
 
-    // ha a törlés vagy check ikonra kattintunk, ne válasszon ki
     if (e.target.closest("button")) return;
 
-    // előző chosen törlése
     const prevChosen = document.querySelector(".chosen");
     if (prevChosen) prevChosen.classList.remove("chosen");
 
     document.addEventListener("contextmenu", (e) => {
-        if (li.classList.contains("chosen")){
+        if (li.classList.contains("chosen")) {
             li.classList.remove("chosen");
             e.preventDefault();
         }
     })
 
-    // most kijelöljük az új elemet
     li.classList.add("chosen");
 }
 
-// csak egyszer adjuk hozzá a nyílkezelést
 document.addEventListener("keydown", (e) => {
     const chosen = document.querySelector(".chosen");
-    if (!chosen) return; // ha nincs kiválasztott elem, ne csináljon semmit
+    if (!chosen) return;
 
     const index = Number(chosen.dataset.index);
 
@@ -132,10 +125,8 @@ document.addEventListener("keydown", (e) => {
 });
 
 function swapTasks(i, j) {
-    // 1️⃣ tömb sorrend csere
     [tasks[i], tasks[j]] = [tasks[j], tasks[i]];
 
-    // 2️⃣ DOM csere
     const lis = ul.querySelectorAll("li");
     const li1 = lis[i];
     const li2 = lis[j];
@@ -145,11 +136,9 @@ function swapTasks(i, j) {
     ul.replaceChild(li1, li2);
     ul.replaceChild(li2, placeholder);
 
-    // 3️⃣ index frissítése
     updateTaskList();
     saveTask();
 
-    // visszaadjuk az új helyen lévő elemet
     return ul.querySelectorAll("li")[j];
 }
 
@@ -164,11 +153,9 @@ function updateTaskList() {
 }
 
 function updateChosen(newChosen) {
-    // az előző chosen class törlése
     const oldChosen = document.querySelector(".chosen");
     if (oldChosen) oldChosen.classList.remove("chosen");
 
-    // az új helyen lévő elem megjelölése
     if (newChosen) newChosen.classList.add("chosen");
 }
 
@@ -180,8 +167,6 @@ document.addEventListener("click", chooseTask);
 function doneTask(e) {
     if (!(e.target.classList.contains("fa-square-check"))) return;
     const li = e.target.closest("li");
-
-
 
     const icon = e.target;
     if (li.classList.contains("done")) {
