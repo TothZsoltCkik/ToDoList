@@ -60,30 +60,30 @@ function saveTask() {
 }
 
 function deleteTask(e) {
-  const button = e.target.closest("button");
-  if (!button) return;
+    const button = e.target.closest("button");
+    if (!button) return;
 
-  if (
-    !(e.target.classList.contains("fa-trash-o")) &&
-    !(e.target.classList.contains("delete-btn"))
-  ) return;
+    if (
+        !(e.target.classList.contains("fa-trash-o")) &&
+        !(e.target.classList.contains("delete-btn"))
+    ) return;
 
-  if (!confirm("Biztosan szeretnéd kitörölni?")) return;
+    if (!confirm("Biztosan szeretnéd kitörölni?")) return;
 
-  const li = button.closest("li");
-  if (!li) return;
+    const li = button.closest("li");
+    if (!li) return;
 
-  const index = Number(li.dataset.index);
+    const index = Number(li.dataset.index);
 
-  // törlés a tömbből
-  tasks.splice(index, 1);
-  saveTask();
+    // törlés a tömbből
+    tasks.splice(index, 1);
+    saveTask();
 
-  // törlés a DOM-ból
-  li.remove();
+    // törlés a DOM-ból
+    li.remove();
 
-  // 🔧 itt jön a fontos rész:
-  updateTaskList();
+    // 🔧 itt jön a fontos rész:
+    updateTaskList();
 }
 
 ul.addEventListener("click", deleteTask);
@@ -91,78 +91,85 @@ ul.addEventListener("click", deleteTask);
 
 
 function chooseTask(e) {
-  const li = e.target.closest("li");
-  if (!li) return;
-  if (li.classList.contains("done")) return;
+    const li = e.target.closest("li");
+    if (!li) return;
+    if (li.classList.contains("done")) return;
 
-  // ha a törlés vagy check ikonra kattintunk, ne válasszon ki
-  if (e.target.closest("button")) return;
+    // ha a törlés vagy check ikonra kattintunk, ne válasszon ki
+    if (e.target.closest("button")) return;
 
-  // előző chosen törlése
-  const prevChosen = document.querySelector(".chosen");
-  if (prevChosen) prevChosen.classList.remove("chosen");
+    // előző chosen törlése
+    const prevChosen = document.querySelector(".chosen");
+    if (prevChosen) prevChosen.classList.remove("chosen");
 
-  // most kijelöljük az új elemet
-  li.classList.add("chosen");
+    document.addEventListener("contextmenu", (e) => {
+        if (li.classList.contains("chosen")){
+            li.classList.remove("chosen");
+            e.preventDefault();
+        }
+    })
+
+    // most kijelöljük az új elemet
+    li.classList.add("chosen");
 }
 
 // csak egyszer adjuk hozzá a nyílkezelést
 document.addEventListener("keydown", (e) => {
-  const chosen = document.querySelector(".chosen");
-  if (!chosen) return; // ha nincs kiválasztott elem, ne csináljon semmit
+    const chosen = document.querySelector(".chosen");
+    if (!chosen) return; // ha nincs kiválasztott elem, ne csináljon semmit
 
-  const index = Number(chosen.dataset.index);
+    const index = Number(chosen.dataset.index);
 
-  if (e.key === "ArrowUp" && index > 0) {
-    const newChosen = swapTasks(index, index - 1);
-    updateChosen(newChosen);
-  }
+    if (e.key === "ArrowUp" && index > 0) {
+        const newChosen = swapTasks(index, index - 1);
+        updateChosen(newChosen);
+    }
 
-  if (e.key === "ArrowDown" && index < tasks.length - 1) {
-    const newChosen = swapTasks(index, index + 1);
-    updateChosen(newChosen);
-  }
+    if (e.key === "ArrowDown" && index < tasks.length - 1) {
+        const newChosen = swapTasks(index, index + 1);
+        updateChosen(newChosen);
+    }
 });
 
 function swapTasks(i, j) {
-  // 1️⃣ tömb sorrend csere
-  [tasks[i], tasks[j]] = [tasks[j], tasks[i]];
+    // 1️⃣ tömb sorrend csere
+    [tasks[i], tasks[j]] = [tasks[j], tasks[i]];
 
-  // 2️⃣ DOM csere
-  const lis = ul.querySelectorAll("li");
-  const li1 = lis[i];
-  const li2 = lis[j];
+    // 2️⃣ DOM csere
+    const lis = ul.querySelectorAll("li");
+    const li1 = lis[i];
+    const li2 = lis[j];
 
-  const placeholder = document.createElement("div");
-  ul.replaceChild(placeholder, li1);
-  ul.replaceChild(li1, li2);
-  ul.replaceChild(li2, placeholder);
+    const placeholder = document.createElement("div");
+    ul.replaceChild(placeholder, li1);
+    ul.replaceChild(li1, li2);
+    ul.replaceChild(li2, placeholder);
 
-  // 3️⃣ index frissítése
-  updateTaskList();
-  saveTask();
+    // 3️⃣ index frissítése
+    updateTaskList();
+    saveTask();
 
-  // visszaadjuk az új helyen lévő elemet
-  return ul.querySelectorAll("li")[j];
+    // visszaadjuk az új helyen lévő elemet
+    return ul.querySelectorAll("li")[j];
 }
 
 function updateTaskList() {
-  const taskListItems = ul.querySelectorAll("li");
+    const taskListItems = ul.querySelectorAll("li");
 
-  taskListItems.forEach((li, index) => {
-    li.dataset.index = index;
-    const span = li.querySelector("span");
-    if (span) span.textContent = tasks[index];
-  });
+    taskListItems.forEach((li, index) => {
+        li.dataset.index = index;
+        const span = li.querySelector("span");
+        if (span) span.textContent = tasks[index];
+    });
 }
 
 function updateChosen(newChosen) {
-  // az előző chosen class törlése
-  const oldChosen = document.querySelector(".chosen");
-  if (oldChosen) oldChosen.classList.remove("chosen");
+    // az előző chosen class törlése
+    const oldChosen = document.querySelector(".chosen");
+    if (oldChosen) oldChosen.classList.remove("chosen");
 
-  // az új helyen lévő elem megjelölése
-  if (newChosen) newChosen.classList.add("chosen");
+    // az új helyen lévő elem megjelölése
+    if (newChosen) newChosen.classList.add("chosen");
 }
 
 document.addEventListener("click", chooseTask);
