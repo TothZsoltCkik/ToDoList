@@ -60,24 +60,32 @@ function saveTask() {
 }
 
 function deleteTask(e) {
-    const li = e.target.closest("button");
-    if (!(e.target.classList.contains("fa-trash-o")) && !(e.target.classList.contains("delete-btn"))) return;
+  const button = e.target.closest("button");
+  if (!button) return;
 
-    if (!confirm("Biztosan szeretnéd kitörölni?")) {
-        return
-    }
+  if (
+    !(e.target.classList.contains("fa-trash-o")) &&
+    !(e.target.classList.contains("delete-btn"))
+  ) return;
 
-    if (!li) {
-        return;
-    }
+  if (!confirm("Biztosan szeretnéd kitörölni?")) return;
 
-    li.parentElement.remove();
+  const li = button.closest("li");
+  if (!li) return;
 
-    const index = li.dataset.index;
-    tasks.splice(index, 1);
-    saveTask();
+  const index = Number(li.dataset.index);
 
+  // törlés a tömbből
+  tasks.splice(index, 1);
+  saveTask();
+
+  // törlés a DOM-ból
+  li.remove();
+
+  // 🔧 itt jön a fontos rész:
+  updateTaskList();
 }
+
 ul.addEventListener("click", deleteTask);
 
 
@@ -124,7 +132,6 @@ function swapTasks(i, j) {
   const lis = ul.querySelectorAll("li");
   const li1 = lis[i];
   const li2 = lis[j];
-  if (!li1 || !li2) return null;
 
   const placeholder = document.createElement("div");
   ul.replaceChild(placeholder, li1);
