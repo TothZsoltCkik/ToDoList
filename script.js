@@ -179,11 +179,13 @@ function doneTask(e) {
     const icon = e.target;
     if (li.classList.contains("done")) {
         li.classList.remove("done");
+        li.classList.add("undone");
         icon.classList.remove("fa-solid");
         icon.classList.add("fa-regular");
     }
     else {
         li.classList.add("done");
+        li.classList.remove("undone");
         icon.classList.remove("fa-regular");
         icon.classList.add("fa-solid");
     }
