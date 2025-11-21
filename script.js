@@ -166,11 +166,6 @@ function updateTaskList() {
         if (span) span.textContent = tasks[index];
     }
 
-    // taskListItems.forEach((li, index) => {
-    //     li.dataset.index = index;
-    //     const span = li.querySelector("span");
-    //     if (span) span.textContent = tasks[index];
-    // });
 }
 
 function updateChosen(newChosen) {
