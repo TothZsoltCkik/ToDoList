@@ -168,6 +168,8 @@ function doneTask(e) {
     if (!(e.target.classList.contains("fa-square-check"))) return;
     const li = e.target.closest("li");
 
+
+
     const icon = e.target;
     if (li.classList.contains("done")) {
         li.classList.remove("done");
