@@ -14,13 +14,9 @@ function setTasks() {
     const li = createListItem(text.value, tasks.length - 1);
     ul.appendChild(li);
     text.value = "";
-
-
 }
 
-
 const switch_btn = document.getElementById("switch");
-
 
 function switch_mode() {
     const body = document.body;
@@ -30,19 +26,14 @@ function switch_mode() {
     body.classList.toggle("lighter");
 
     if (body.classList.contains("darker")) {
-        span.textContent = "dark_mode";
-    } else {
         span.textContent = "light_mode";
+    } else {
+        span.textContent = "dark_mode";
     }
 }
 
 
-
-
 switch_btn.addEventListener("click", switch_mode);
-
-
-
 
 
 text.addEventListener("keypress", (e) => {
@@ -61,7 +52,6 @@ function createListItem(task, i) {
     li.appendChild(deleteButton);
     li.dataset.index = i;
 
-
     return li;
 }
 
@@ -77,9 +67,7 @@ function createButton(text) {
     const tempButton = document.createElement("button");
     tempButton.innerHTML = text;
 
-
     return tempButton;
-
 }
 
 function saveTask() {
@@ -172,11 +160,17 @@ function swapTasks(i, j) {
 function updateTaskList() {
     const taskListItems = ul.querySelectorAll("li");
 
-    taskListItems.forEach((li, index) => {
-        li.dataset.index = index;
+    for (let index = 0; index < taskListItems.length; index++) {
+        taskListItems[index].dataset.index = index;
         const span = li.querySelector("span");
         if (span) span.textContent = tasks[index];
-    });
+    }
+
+    // taskListItems.forEach((li, index) => {
+    //     li.dataset.index = index;
+    //     const span = li.querySelector("span");
+    //     if (span) span.textContent = tasks[index];
+    // });
 }
 
 function updateChosen(newChosen) {
@@ -189,13 +183,9 @@ function updateChosen(newChosen) {
 document.addEventListener("click", chooseTask);
 
 
-
-
 function doneTask(e) {
     if (!(e.target.classList.contains("fa-square-check"))) return;
     const li = e.target.closest("li");
-
-
 
     const icon = e.target;
     if (li.classList.contains("done")) {
@@ -210,8 +200,6 @@ function doneTask(e) {
     }
 
 }
-
-
 
 ul.addEventListener("click", doneTask)
 

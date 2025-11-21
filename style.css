@@ -1,5 +1,3 @@
-
-
 * {
     margin: 0;
     padding: 0;
@@ -18,12 +16,14 @@ body {
     transition: background-image 0.3s linear, color 0.3s linear;
 }
 
-body.light {
+body.lighter {
     --bg-main: linear-gradient(120deg, #d4f1ff, #ffffff);
     --bg-card: #ffffff;
     --bg-item: #f7f7fb;
     --text-main: #111111;
     --text-muted: #6c6c70;
+    --text-color: black;
+    --bg-butt: grey;
     --border-soft: #e5e5ea;
 }
 
@@ -33,6 +33,8 @@ body.darker {
     --bg-item: #515f66;
     --text-main: #f5f7ff;
     --text-muted: #9aa6b8;
+    --text-color: white;
+    --bg-butt: white;
     --border-soft: rgba(255, 255, 255, 0.18);
 }
 
@@ -51,7 +53,7 @@ body #switch button {
     justify-content: center;
     align-items: center;
     border: 1px solid var(--border-soft);
-    background-color: rgba(255, 255, 255, 0.12);
+    background-color: var(--bg-butt);
     backdrop-filter: blur(12px);
     box-shadow: var(--shadow-soft);
     cursor: pointer;
@@ -114,14 +116,13 @@ body #switch button:active {
     font-weight: 400;
 }
 
-.input input:focus {
+.input :focus {
     border: 1px solid var(--primary);
     outline: none;
     opacity: 1;
     box-shadow: 0 0 24px rgba(0, 122, 255, 0.45);
 }
 
-/* button rész */
 
 .input button {
     width: 8em;
@@ -133,9 +134,9 @@ body #switch button:active {
     font-weight: 600;
     font-size: 0.95em;
     background: var(--primary);
-    color: #ffffff;
+    color: var(--text-color);
     transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.15s ease;
-    box-shadow: 0 14px 30px rgba(0, 122, 255, 0.4);
+    box-shadow: 0 0 24px rgba(0, 122, 255, 0.45);
 }
 
 .input button:hover {
@@ -153,9 +154,6 @@ body #switch button:active {
 
 }
 
-
-
-/*felsorolas resze*/
 
 .list {
     display: flex;
