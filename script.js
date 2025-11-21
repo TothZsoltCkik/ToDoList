@@ -18,6 +18,33 @@ function setTasks() {
 
 }
 
+
+const switch_btn = document.getElementById("switch");
+
+
+function switch_mode() {
+    const body = document.body;
+    const span = document.getElementById("mode-icon");
+
+    body.classList.toggle("darker");
+    body.classList.toggle("lighter");
+
+    if (body.classList.contains("darker")) {
+        span.textContent = "dark_mode";
+    } else {
+        span.textContent = "light_mode";
+    }
+}
+
+
+
+
+switch_btn.addEventListener("click", switch_mode);
+
+
+
+
+
 text.addEventListener("keypress", (e) => {
     if (e.key === "Enter") setTasks();
 })
@@ -173,13 +200,11 @@ function doneTask(e) {
     const icon = e.target;
     if (li.classList.contains("done")) {
         li.classList.remove("done");
-        li.classList.add("undone");
         icon.classList.remove("fa-solid");
         icon.classList.add("fa-regular");
     }
     else {
         li.classList.add("done");
-        li.classList.remove("undone");
         icon.classList.remove("fa-regular");
         icon.classList.add("fa-solid");
     }

@@ -1,17 +1,3 @@
-:root {
-    --bg-main: #f5f5f7;
-    --bg-card: #ffffff;
-    --bg-item: #f3f3f5;
-    --primary: #007aff;
-    --primary-soft: rgba(0, 122, 255, 0.08);
-    --border-soft: #e5e5ea;
-    --text-main: #111111;
-    --text-muted: #6c6c70;
-    --danger: #ff3b30;
-    --radius-lg: 18px;
-    --radius-md: 12px;
-    --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.08);
-}
 
 
 * {
@@ -20,27 +6,69 @@
     box-sizing: border-box;
 }
 
-.darker{
-    background-image: linear-gradient(100deg, #001214, #001f29);
-    color: white;
-    transition: 0.3s linear;
-}
-
-.light {
-    background-image: linear-gradient(100deg, #d4f1ff, #ffffff);
-    color: #1a150e;
-    transition: 0.3s linear;
-}
-
-body{
+body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 80vh;
-    overflow-y:auto;
+    overflow-y: auto;
+    position: relative;
+    background-image: var(--bg-main);
+    color: var(--text-main);
+    transition: background-image 0.3s linear, color 0.3s linear;
 }
 
-.display{
+body.light {
+    --bg-main: linear-gradient(120deg, #d4f1ff, #ffffff);
+    --bg-card: #ffffff;
+    --bg-item: #f7f7fb;
+    --text-main: #111111;
+    --text-muted: #6c6c70;
+    --border-soft: #e5e5ea;
+}
+
+body.darker {
+    --bg-main: linear-gradient(120deg, #001214, #001f29);
+    --bg-card: #051821;
+    --bg-item: #515f66;
+    --text-main: #f5f7ff;
+    --text-muted: #9aa6b8;
+    --border-soft: rgba(255, 255, 255, 0.18);
+}
+
+body #switch {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+}
+
+body #switch button {
+    padding: 0;
+    height: 50px;
+    width: 50px;
+    border-radius: 999px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--border-soft);
+    background-color: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-soft);
+    cursor: pointer;
+    transition: transform 0.15s all;
+}
+
+body #switch button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 22px 55px rgba(0, 0, 0, 0.18);
+}
+
+body #switch button:active {
+    transform: scale(0.95);
+}
+
+
+.display {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -48,63 +76,82 @@ body{
     gap: 30px;
 }
 
-.text{
+.text {
     text-align: center;
     position: sticky;
 }
 
-.text h1{
+.text h1 {
     font-size: 5em;
 }
 
+/* input rész */
 
-/*input resze*/
-
-.input{
+.input {
     display: flex;
-    flex-direction:row;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    
 }
 
-.input input{
+.input input {
     width: 40vw;
     min-width: 500px;
     height: 70px;
     border-radius: 40px 0px 0 40px;
-    border: none;
-    background-color: #ffffff;
-    opacity: 0.8;
-    padding: 0 0 0 10px;
+    border: 1px solid var(--border-soft);
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    opacity: 0.9;
+    padding: 0 0 0 18px;
     font-size: 1em;
-    font-weight: bold;
-    transition: 0.4s linear;
+    font-weight: 600;
+    transition: 0.3s ease;
 }
 
-.input input:focus{
-    border: none;
+.input input::placeholder {
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.input input:focus {
+    border: 1px solid var(--primary);
     outline: none;
     opacity: 1;
-    box-shadow: 0 0 20px rgba(0, 170, 255, 0.5);
+    box-shadow: 0 0 24px rgba(0, 122, 255, 0.45);
 }
 
+/* button rész */
 
-/*button resze*/
-
-.input button{
+.input button {
     width: 8em;
     height: 70px;
-    padding: 10px 15px;
+    padding: 10px 18px;
     border-radius: 0 40px 40px 0;
     cursor: pointer;
     border: none;
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 0.95em;
+    background: var(--primary);
+    color: #ffffff;
+    transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    box-shadow: 0 14px 30px rgba(0, 122, 255, 0.4);
 }
+
+.input button:hover {
+    background: #0060d1;
+    box-shadow: 0 18px 38px rgba(0, 122, 255, 0.5);
+}
+
+.input button:active {
+    transform: scale(0.97);
+    box-shadow: 0 8px 20px rgba(0, 122, 255, 0.35);
+}
+
 .noselect {
     user-select: none;
-    
-  }
+
+}
 
 
 
@@ -117,10 +164,9 @@ body{
     max-height: 55vh;
     padding-bottom: 10px;
     scroll-behavior: smooth;
-    
 }
 
-.list ul{
+.list ul {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -129,194 +175,217 @@ body{
     list-style-type: none;
     width: 30vw;
     max-height: 700px;
-    overflow-y:auto;
+    overflow-y: auto;
     overflow-x: hidden;
+    padding: 40px;
 }
 
-
-.list li{
+.list li {
     padding: 20px;
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
     align-items: center;
-    height: 3em;
+    min-height: 3em;
     border-radius: 20px;
-    background-color: #ffffff;
-    color: black;
+    background-color: var(--bg-card);
+    color: var(--text-main);
     font-size: 20px;
-    border: 1px solid black;
+    border: 1px solid var(--border-soft);
     gap: 10px;
     opacity: 1;
-    transition: 
+    box-shadow: var(--shadow-soft);
+    margin: 10px;
+    transition:
         opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
         margin 0.5s ease,
-        background-color 0.5s ease;
-    
+        background-color 0.3s ease,
+        transform 0.12s ease,
+        box-shadow 0.2s ease;
+}
+
+.list li:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.16);
 }
 
 .list li:active {
     transform: scale(0.99);
-    
 }
 
-.list button{
+.list button {
     border: none;
     cursor: pointer;
-    background-color: lightgrey;
+    background-color: var(--bg-item);
     padding: 9px;
     border-radius: 30px;
 }
 
-
-.list span 
-{
+.list span {
     flex-grow: 1;
     text-align: left;
 }
 
-
-
 .list li.chosen {
     border-color: var(--primary);
     background: var(--primary-soft);
-    color: white;
-    transition: transform 0.15s ease;    
+    color: var(--text-main);
+    transition: transform 0.15s ease;
     z-index: 1000;
 }
 
-
-
-
-.list i{
+.list i {
     font-size: 31px;
 }
 
-.list li.done{
-    background-color: green;
+
+.fa-square-check {
+        color: var(--text-main);
+    }
+.fa-trash-o{
+    color: var(--text-main);
+}
+
+.list li.done {
+    background-color: rgba(44, 180, 73, 0.16);
+    border-color: rgba(44, 180, 73, 0.7);
     text-decoration: line-through;
-    opacity: 0.1;
+    opacity: 0.6;
     position: relative;
     margin: 0 5px 0 5px;
-
 }
 
-.list li.undone { 
+.list li.undone {
     opacity: 1;
 }
+
 
 
 
 .list li.done:active {
     animation: shake 0.25s;
     transition: none;
-    
+
 }
 
 @keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-3px); }
-    50% { transform: translateX(3px); }
-    75% { transform: translateX(-3px); }
-    100% { transform: translateX(0); }
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-3px);
+    }
+
+    50% {
+        transform: translateX(3px);
+    }
+
+    75% {
+        transform: translateX(-3px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
 }
 
-.list li button{
+.list li button {
     z-index: 10;
     opacity: 1;
 }
 
 @media (max-width: 1200px) {
-    .display{
+    .display {
         width: 90vw;
     }
 
-    .input input{
+    .input input {
         width: 60vw;
-        min-width: 0; /* ne erőltesse a 500px-t */
+        min-width: 0;
+
     }
 
-    .list ul{
+    .list ul {
         width: 60vw;
     }
 
-    .text h1{
+    .text h1 {
         font-size: 3.5em;
     }
 }
 
-/* Tablet / kisebb kijelzők */
+
 @media (max-width: 900px) {
-    body{
+    body {
         height: auto;
         min-height: 100vh;
         padding: 30px 15px;
         align-items: flex-start;
     }
 
-    .display{
+    .display {
         width: 100%;
         max-width: 700px;
         margin: 0 auto;
         gap: 25px;
     }
 
-    .text h1{
+    .text h1 {
         font-size: 3em;
     }
 
-    .input{
+    .input {
         flex-direction: row;
         gap: 10px;
     }
 
-    .input input{
+    .input input {
         width: 100%;
         height: 60px;
         font-size: 0.95em;
         border-radius: 40px;
     }
 
-    .input button{
+    .input button {
         height: 60px;
         border-radius: 40px;
         padding: 8px 15px;
     }
 
-    .list{
+    .list {
         max-height: 60vh;
     }
 
-    .list ul{
+    .list ul {
         width: 100%;
         max-height: none;
     }
 
-    .list li{
+    .list li {
         font-size: 18px;
         height: auto;
     }
 }
 
-/* Mobil nézet */
 @media (max-width: 600px) {
-    body{
+    body {
         padding: 20px 10px;
     }
 
-    .display{
+    .display {
         width: 100%;
         gap: 20px;
     }
 
-    .text h1{
+    .text h1 {
         font-size: 2.2em;
     }
 
-    .input{
+    .input {
         flex-direction: column;
     }
 
-    .input input{
+    .input input {
         min-width: 0;
         width: 100%;
         height: 55px;
@@ -324,7 +393,7 @@ body{
         font-size: 0.9em;
     }
 
-    .input button{
+    .input button {
         width: 100%;
         margin-top: 8px;
         height: 50px;
@@ -332,39 +401,40 @@ body{
         border-radius: 40px;
     }
 
-    .list{
+    .list {
         max-height: none;
     }
 
-    .list ul{
+    .list ul {
         width: 100%;
         gap: 15px;
     }
 
-    .list li{
+    .list li {
         padding: 14px;
         font-size: 16px;
         height: auto;
     }
 
-    .list i{
+    .list i {
         font-size: 24px;
+        
     }
+
 }
 
-/* Extra pici telók */
 @media (max-width: 400px) {
-    .text h1{
+    .text h1 {
         font-size: 1.8em;
     }
 
-    .list li{
+    .list li {
         padding: 12px;
         font-size: 15px;
         gap: 8px;
     }
 
-    .list i{
+    .list i {
         font-size: 22px;
     }
 }
